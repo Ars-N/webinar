@@ -27,7 +27,7 @@ const TodoItemsContext = createContext<
 >(null);
 
 const defaultState = { todoItems: [] };
-const localStorageKey = 'todoListState';
+export const localStorageKey = 'todoListState';
 
 export const TodoItemsContextProvider = ({
     children,
@@ -39,7 +39,7 @@ export const TodoItemsContextProvider = ({
     useEffect(() => {
         const savedState = localStorage.getItem(localStorageKey);
 
-        if (savedState) {
+        if (savedState?.length) {
             try {
                 dispatch({ type: 'loadState', data: JSON.parse(savedState) });
             } catch {}
@@ -47,7 +47,7 @@ export const TodoItemsContextProvider = ({
     }, []);
 
     useEffect(() => {
-        localStorage.setItem(localStorageKey, JSON.stringify(state));
+        localStorage.setItem(localStorageKey, JSON.stringify(state.todoItems));
     }, [state]);
 
     return (

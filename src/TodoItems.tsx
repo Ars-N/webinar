@@ -61,6 +61,7 @@ export const TodoItemsList = function () {
 
     return (
       <DragDropContext onDragEnd={onDragEnd}>
+          {console.log('todoItems', todoItems)}
           <Droppable droppableId="droppable-list">
               {(provided) => (
                 <ul ref={provided.innerRef} className={classes.root} {...provided.droppableProps} >
