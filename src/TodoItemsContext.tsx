@@ -1,6 +1,6 @@
 import {
     createContext,
-    ReactNode,
+    ReactNode, useCallback,
     useContext,
     useEffect,
     useReducer,
@@ -36,18 +36,29 @@ export const TodoItemsContextProvider = ({
 }) => {
     const [state, dispatch] = useReducer(todoItemsReducer, defaultState);
 
-    useEffect(() => {
+    const getStorageData = useCallback(() =>{
         const savedState = localStorage.getItem(localStorageKey);
 
         if (savedState?.length) {
             try {
-                dispatch({ type: 'loadState', data: JSON.parse(savedState) });
+                dispatch({type: 'loadState', data: JSON.parse(savedState)});
             } catch {}
         }
+    },[])
+
+    useEffect(() => {
+        window.onstorage = () => {
+            getStorageData()
+        }
+        getStorageData()
+
+        return window.removeEventListener('storage',getStorageData)
     }, []);
 
     useEffect(() => {
-        localStorage.setItem(localStorageKey, JSON.stringify(state.todoItems));
+        if (state.todoItems.length) {
+            localStorage.setItem(localStorageKey, JSON.stringify(state.todoItems));
+        }
     }, [state]);
 
     return (
