@@ -72,13 +72,16 @@ export const useTodoItems = () => {
 function todoItemsReducer(state: TodoItemsState, action: TodoItemsAction) {
     switch (action.type) {
         case 'loadState': {
-            return action.data;
+            return {
+                ...state,
+                todoItems: action.data,
+            };
         }
         case 'add':
             return {
                 ...state,
                 todoItems: [
-                    { id: generateId(), done: false, ...action.data.todoItem },
+                    { id: generateId(), done: false, ...action.data },
                     ...state.todoItems,
                 ],
             };

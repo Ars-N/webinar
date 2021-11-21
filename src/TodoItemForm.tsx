@@ -18,7 +18,7 @@ export default function TodoItemForm() {
     return (
         <form
             onSubmit={handleSubmit((formData) => {
-                dispatch({ type: 'add', data: { todoItem: formData } });
+                dispatch({ type: 'add', data: formData });
                 reset({ title: '', details: '' });
             })}
         >
