@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import { useTodoItems } from './TodoItemsContext';
+import { useTodoItems } from '../TodoItemsContext';
 
 const useInputStyles = makeStyles(() => ({
   root: {
@@ -18,7 +18,7 @@ export default function TodoItemForm() {
 
   return (
     <form
-      onSubmit={handleSubmit((formData) => {
+      onSubmit={handleSubmit(formData => {
         dispatch({ type: 'add', data: formData });
         reset({ title: '', details: '' });
       })}
